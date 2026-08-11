@@ -1,0 +1,48 @@
+1. WhatistheNode.jsEventLoop?
+-is a loop for excution callback and timers
+-is the mechanism that allows single-threaded JavaScript to handle non-blocking,
+-asynchronous operations
+
+
+
+2.WhatisLibuvandWhatRoleDoesItPlayinNode.js?
+-I/O library handel asynchronous operation,
+-Manages the Event Loop
+-file system
+-network
+-thread pool
+-chil process
+
+
+3.HowDoesNode.jsHandleAsynchronousOperationsUndertheHood?
+-Main Thread
+(executes your code sequentially on a single main thread.)
+-libUV
+(like reading a file or network request)
+-OS
+-Event Loop
+(Event Loop checks the queue and pushes the callback onto the main thread to execute when it's idle)
+
+
+
+4. WhatistheDifferenceBetweentheCallStack,EventQueue,andEventLoopinNode.js?
+-Call Stack: Executes code synchronously using LIFO
+-Event Queue (Callback registration): Stores completed asynchronous callbacks using FIFO
+-Event Loop: The continuously running process that checks the Call Stack. If the Call Stack is empty,
+ it grabs the first task from the Event Queue and pushes it onto the Call Stack to run.
+
+
+
+5. WhatistheNode.jsThreadPoolandHowtoSettheThreadPoolSize?
+-is a set of background worker threads provided by libuv to execute heavy, blocking tasks:like filesystem operations
+-set UV_THREADPOOL_SIZE=8
+
+
+
+6. HowDoesNode.jsHandleBlockingandNon-BlockingCodeExecution?
+javaScript code sequentially on a single main thread
+-Blocking Code: Executes synchronously on the main thread, stopping all other JavaScript execution until the current task finishes
+-Non-Blocking Code: Executes asynchronously.
+offloads heavy or I/O tasks:like file reading or network requests:to the OS or libuv Thread Pool
+
+
