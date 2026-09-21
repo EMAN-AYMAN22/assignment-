@@ -1,0 +1,1 @@
+export { default as salesRouter } from "./sale.controller.js" 
