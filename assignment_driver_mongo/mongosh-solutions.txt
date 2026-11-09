@@ -1,0 +1,72 @@
+1_  db.createCollection("books", {
+  validator: {
+    $jsonSchema: bookSchema
+  }
+});
+________________________________________________________
+2_  db.collection("author");
+________________________________________________________
+3_   db.createCollection("logs", {
+            capped: true, 
+            size: 1048576 // 1MB بالبايت
+        });
+________________________________________________________
+4_   BookModel.createIndex({ title: 1 })
+_______________________________________________________
+5_ BookModel.insertOne(req.body)
+_____________________________________________________
+ 6_  BookModel.insertMany(books)
+____________________________________________________
+7_ logModel.insertOne(logData)
+_____________________________________________________
+8_  BookModel.updateOne(
+            { title: title },          
+            { $set: { year: 2022 } }   
+        );
+_____________________________________________________
+9_  BookModel.findOne({ title: title });
+_______________________________________________________
+10_ BookModel.find({
+      year: { 
+        $gte: Number(from), //coming from query string, convert to number
+        $lte: Number(to)}}).toArray()
+_______________________________________________________
+11_ BookModel.find({ genres: genre }).toArray();
+_______________________________________________________
+12_ BookModel.find({})
+      .sort({ year: -1 }) 
+      .skip(2)          
+      .limit(3)        
+      .toArray();
+_______________________________________________________
+13_ BookModel.find({
+      year: { $type: "int" },
+    }).toArray();
+_______________________________________________________
+14_  BookModel.find({
+      genres: { $nin: ["Horror", "Science Fiction"] }}).toArray();
+_______________________________________________________
+15_  BookModel.deleteMany({ 
+      year: { $lt: Number(year) }});
+_______________________________________________________
+16_ BookModel.aggregate([
+      { $match: { year: { $gt: 2000 } } }, 
+      { $sort: { year: -1 } }             
+    ]).toArray();
+_______________________________________________________
+17_ BookModel.aggregate([
+  {$match:{year:{$gt:2000}}},
+  {$project:{title:1,year:1,author:1,_id:0}}, 
+]).toArray();
+_____________________________________________________
+18_ BookModel.aggregate([
+      { $unwind: "$genres" }, 
+      {
+        $project: {
+          _id: 0,
+          title: 1,
+          genres: 1
+        }
+      }
+    ]).toArray();
+
